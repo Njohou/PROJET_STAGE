@@ -1,0 +1,22 @@
+<div class="jumbotron" style="background-color: dimgrey; text-align: center">
+  <h1 class="display-4">QUIZ LIST</h1>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let quiz_item of quiz">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{quiz_item.course}} <span *ngIf="isStaff == 'true' ">({{quiz_item.classe_details.level}})</span>
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list class="p-3">
+      <a *ngIf="isStaff == 'false'" (click)="participate(quiz_item.id)" style="cursor: pointer;">
+        <span>{{quiz_item.entitled}}</span>
+      </a>
+      <a *ngIf="isStaff == 'true' " style="cursor: pointer;" [routerLink]="['/quiz-item', quiz_item.id]">
+        <span>{{quiz_item.entitled}}</span>
+      </a>
+      <button *ngIf="isStaff == 'true'" mat-icon-button color="warn" (click)="DeleteMethod(quiz_item.id)"><mat-icon>delete_outline</mat-icon></button>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>

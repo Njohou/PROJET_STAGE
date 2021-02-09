@@ -1,0 +1,37 @@
+<mat-card style="opacity: 0.8">
+  <mat-card-content>
+    <div class="logo-container">
+      <img mat-card-image src="assets/images/logo.png" class="logo" alt="Photo of a Shiba Inu">
+    </div>
+    <mat-card-title class="header">
+      <h2>LOGIN</h2>
+    </mat-card-title>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="username-input">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label> Username/Register Number </mat-label>
+          <input formControlName="username" matInput required />
+          <mat-icon matSuffix>perm_identity</mat-icon>
+          <mat-error *ngIf="loginForm.get('username').errors?.required">
+            Required username.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label> Password </mat-label>
+          <input formControlName="password" matInput placeholder="Enter your password"
+                 [type]="hide ? 'password' : 'text'" required>
+          <mat-icon matSuffix (click)="hide = !hide"
+                    [attr.aria-label]="'Hide Password'" [attr.aria-pressed]="hide">
+            {{hide ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+          <mat-error *ngIf="loginForm.get('password').errors?.required">
+            Required password.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button mat-flat-button color="warn">Login</button>
+    </form>
+  </mat-card-content>
+</mat-card>

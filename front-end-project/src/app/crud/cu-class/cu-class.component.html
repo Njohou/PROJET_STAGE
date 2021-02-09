@@ -1,0 +1,88 @@
+<div class="jumbotron jumbotron-fluid" style="padding-bottom: 30px;padding-top: 30px;text-align: center">
+  <div class="container">
+    <h1 *ngIf="!classData">Create Class informations</h1>
+    <h1 *ngIf="classData">Update Class informations</h1>
+  </div>
+</div>
+
+
+    <form [formGroup]="ClassForm">
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Level </mat-label>
+            <mat-select formControlName="level" matInput required>
+              <mat-option *ngFor="let class of Class " [value]="class" (click)="disableSerie(class)">
+                {{ class }}
+              </mat-option>
+            </mat-select>
+            <!--<input formControlName="level" matInput required />-->
+            <mat-error *ngIf="ClassForm.get('level').errors?.required">
+              Required level
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6 mb-3">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Class number </mat-label>
+            <mat-select formControlName="class_number" matInput required >
+              <mat-option *ngFor="let numberClass of ClassNumber" [value]="numberClass">
+                {{ numberClass }}
+              </mat-option>
+            </mat-select>
+            <!--<input formControlName="class_number" matInput required />-->
+            <mat-error *ngIf="ClassForm.get('class_number').errors?.required">
+              Required class number
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Serie </mat-label>
+            <mat-select formControlName="serie" matInput [required]="isSerie==true" [disabled]="isSerie==false">
+              <mat-option *ngFor="let serie of serial" [value]="serie" (click)="TakeSerie(serie)">
+                {{ serie }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ClassForm.get('serie').errors?.required">
+              Required serie
+            </mat-error>
+          </mat-form-field>
+        </div>
+          <div class="col-md-6 mb-3">
+            <mat-form-field class="full-width" appearance="legacy">
+              <mat-label> Option </mat-label>
+              <mat-select formControlName="option" matInput required [required]="isOption==true" [disabled]="isOption ==false">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="ClassForm.get('option').errors?.required">
+                Required option
+              </mat-error>
+            </mat-form-field>
+          </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label> Course(s) list </mat-label>
+            <mat-select formControlName="coursesList" matInput required multiple>
+              <mat-option *ngFor="let Allcourse of courseList" [value]="Allcourse">
+                {{ 'Entitled: ' + Allcourse.entitled + ', coefficient: ' + Allcourse.coefficient + ', teacher: ' + Allcourse.course_teacher.first_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ClassForm.get('coursesList').errors?.required">
+              Required courses list
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-dialog-actions align="center">
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnSubmitForm()" [disabled]="ClassForm.invalid" *ngIf="!classData">Save</button>
+        <button mat-raised-button color="primary" style="margin-right: 10px" (click)="OnUpdateForm()" [disabled]="ClassForm.invalid" *ngIf="classData">Update</button>
+        <button mat-raised-button (click)="ReturnFunct()" color="warn">Cancel</button>
+      </mat-dialog-actions>
+    </form>

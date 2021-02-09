@@ -1,0 +1,47 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.icon-spacer{
+  padding: 0 20px 0;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.hide{
+  display: none;
+}
+
+.mat-menu-item {
+  height: inherit;
+  width: fit-content;
+}
+
+//.notification-content {
+//  max-width: fit-content;
+//}
+
+.single-notification {
+  font-family: 'Georgia';
+  font-size: small;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: none !important;
+}

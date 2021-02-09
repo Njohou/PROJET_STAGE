@@ -1,0 +1,31 @@
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=qDoZ0qP8"></script>
+<div style="width: 90%; margin: auto;">
+  <div class="chapter_title">
+    <mat-card>{{myNote.entitled}}</mat-card>
+  </div>
+
+  <div class="note" id="TakeText">
+    <div class="chapter_content text-justify text-secondary font-weight-normal mt-5 mb-3">
+      <div [innerHTML]="myNote.text"></div>
+    </div>
+  </div>
+
+  <div class="text-center m-1" style="background-color: white" id="row-btn">
+    <div class="play_button text-center" class="play_btn">
+          <span style="cursor: pointer">
+            <audio id="audio">
+              <source type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+            <button mat-mini-fab aria-label="play course" matTooltip="Play" (click)="Play()" class="hideButton">
+              <mat-icon>play_arrow</mat-icon>
+            </button>
+          </span>
+      <div class="text-center">
+        <mat-spinner color="warn" diameter=40 class="spinner"></mat-spinner>
+      </div>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,267 @@
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">Class Details</h1>
+</div>
+
+<mat-card style="max-width: 300px">
+  <mat-card-title style="margin-bottom: 20px"> Description </mat-card-title>
+  <mat-divider ></mat-divider>
+  <mat-card-content style="margin-top: 40px"> Level : {{ classInfo.level }} </mat-card-content>
+  <mat-card-content *ngIf="classInfo.serie"> Serie : {{ classInfo.serie }} </mat-card-content>
+  <mat-card-content> Class number : {{ classInfo.class_number }} </mat-card-content>
+  <mat-card-content *ngIf="classInfo.option"> Option : {{ classInfo.option }} </mat-card-content>
+  <!--<mat-card-actions align="end">
+    <button mat-mini-fab aria-label="Edit a class" style="margin: 0 50px auto" matTooltip="update class info" (click)="OpenCUMethod()">
+      <mat-icon>launch</mat-icon>
+    </button>
+    <button mat-mini-fab aria-label="Delete definitely a class" matTooltip="Delete class info">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </mat-card-actions>-->
+</mat-card>
+
+<!--  Students table   -->
+
+<div class="mat-elevation-z8">
+
+  <div class="container" style="text-align: center; margin-top: 60px">
+    <div class="row">
+      <div class="col"><h1><u>Students</u></h1></div>
+    </div>
+  </div>
+
+  <mat-form-field floatLabel="never">
+    <input matInput placeholder="Filter" (keyup)="studentFilter($event.target.value)" autocomplete="off">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="STUDENT_DATA">
+
+    <!-- regis_number Column -->
+    <ng-container matColumnDef="regis_number">
+      <th mat-header-cell *matHeaderCellDef> Register No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.regis_number}} </td>
+    </ng-container>
+
+    <!-- first_name Column -->
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+    </ng-container>
+
+    <!-- last_name Column -->
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef> Surname </th>
+      <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+    </ng-container>
+
+    <!-- tel Column -->
+    <ng-container matColumnDef="tel">
+      <th mat-header-cell *matHeaderCellDef> Telephone </th>
+      <td *matCellDef="let element"> {{element.tel}} </td>
+    </ng-container>
+
+    <!-- dateOfBirth Column -->
+    <ng-container matColumnDef="dateOfBirth">
+      <th mat-header-cell *matHeaderCellDef> Birthday date </th>
+      <td *matCellDef="let element"> {{element.dateOfBirth}} </td>
+    </ng-container>
+
+    <!-- gender Column -->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef> Gender </th>
+      <td *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+
+    <!-- is_active Column -->
+    <ng-container matColumnDef="is_active">
+      <th mat-header-cell *matHeaderCellDef> Is_active ? </th>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_active}} </mat-chip></mat-chip-list></td>
+    </ng-container>
+
+    <!-- is_superuser Column -->
+    <ng-container matColumnDef="is_superuser">
+      <th mat-header-cell *matHeaderCellDef> Is_superuser ? </th>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_superuser}} </mat-chip></mat-chip-list></td>
+    </ng-container>
+
+    <!-- is_staff Column -->
+    <ng-container matColumnDef="is_staff">
+      <th mat-header-cell *matHeaderCellDef> Is_staff ? </th>
+      <td *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_staff}} </mat-chip></mat-chip-list></td>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="studentColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: studentColumns;"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': STUDENT_DATA!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(STUDENT_DATA!=null && STUDENT_DATA.data.length==0)}"></mat-footer-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="5"></mat-paginator>
+</div>
+
+<!--  Teachers table  -->
+
+<div class="mat-elevation-z8">
+
+  <div class="container" style="text-align: center; margin-top: 60px">
+    <div class="row">
+      <div class="col"><h1><u>Teachers</u></h1></div>
+    </div>
+  </div>
+
+  <mat-form-field floatLabel="never">
+    <input matInput placeholder="Filter" (keyup)="teacherFilter($event.target.value)" autocomplete="off">
+  </mat-form-field>
+
+  <table mat-table [dataSource]="TEACHER_DATA">
+
+    <!--Username Column-->
+    <ng-container matColumnDef="username">
+      <th mat-header-cell *matHeaderCellDef> Username </th>
+      <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+    </ng-container>
+
+    <!--Name Column-->
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+    </ng-container>
+
+    <!--Surname Column-->
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef> Surname </th>
+      <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+    </ng-container>
+
+    <!--Email Column-->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Email </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <!--Telephone Column-->
+    <ng-container matColumnDef="tel">
+      <th mat-header-cell *matHeaderCellDef> Telephone </th>
+      <td mat-cell *matCellDef="let element"> {{element.tel}} </td>
+    </ng-container>
+
+    <!--Gender Column-->
+    <ng-container matColumnDef="gender">
+      <th mat-header-cell *matHeaderCellDef> Gender </th>
+      <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+    </ng-container>
+
+    <!--Is_superuser Column-->
+    <ng-container matColumnDef="is_superuser">
+      <th mat-header-cell *matHeaderCellDef> Is_superuser ? </th>
+      <td mat-cell *matCellDef="let element"><mat-chip-list><mat-chip color="primary">{{element.is_superuser}}</mat-chip></mat-chip-list>  </td>
+    </ng-container>
+
+    <!--Is_staff Column-->
+    <ng-container matColumnDef="is_staff">
+      <th mat-header-cell *matHeaderCellDef> Is_staff ? </th>
+      <td mat-cell *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_staff}} </mat-chip></mat-chip-list></td>
+    </ng-container>
+
+    <!--Is_active Column -->
+    <ng-container matColumnDef="is_active">
+      <th mat-header-cell *matHeaderCellDef> Is_active ? </th>
+      <td mat-cell *matCellDef="let element"><mat-chip-list><mat-chip color="primary"> {{element.is_active}} </mat-chip></mat-chip-list></td>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="teacherColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: teacherColumns;"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': TEACHER_DATA!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(TEACHER_DATA!=null && TEACHER_DATA.data.length==0)}"></mat-footer-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<!--  Courses table  -->
+
+<div class="mat-elevation-z8">
+
+  <div class="container" style="text-align: center; margin-top: 60px">
+    <div class="row">
+      <div class="col"><h1><u>Courses</u></h1></div>
+    </div>
+  </div>
+
+  <mat-form-field floatLabel="never">
+    <input matInput (keyup)="CourseFilter($event.target.value)" placeholder="Filter" autocomplete="off">
+  </mat-form-field>
+
+
+  <table mat-table [dataSource]="COURSE_DATA">
+
+    <!-- Entitled Column -->
+    <ng-container matColumnDef="entitled">
+      <th mat-header-cell *matHeaderCellDef> Entitled </th>
+      <td mat-cell *matCellDef="let element"> {{element.entitled}} </td>
+    </ng-container>
+
+    <!-- coefficient Column -->
+    <ng-container matColumnDef="coefficient">
+      <th mat-header-cell *matHeaderCellDef> Coefficient </th>
+      <td mat-cell *matCellDef="let element"> {{element.coefficient}} </td>
+    </ng-container>
+
+    <!-- Teacher name Column -->
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef> Teacher </th>
+      <td mat-cell *matCellDef="let element"> {{element.course_teacher.first_name +' '+ element.course_teacher.last_name}} </td>
+    </ng-container>
+
+    <!-- Icon Column (click)="DeleteCourse(row.id)"-->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td *matCellDef="let row">
+        <button mat-icon-button color="accent"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" ><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        Loading data...
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="courseColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: courseColumns;"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': COURSE_DATA!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(COURSE_DATA!=null && COURSE_DATA.data.length==0)}"></mat-footer-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

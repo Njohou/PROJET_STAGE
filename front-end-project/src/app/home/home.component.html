@@ -1,0 +1,186 @@
+<div class="flex-container text-white m-auto">
+  <!--<div class="col-md-4">
+    <div class="bg-primary m-3" style="height: 170px;">
+      <div><p> N° of Subject taught </p></div>
+      <div><p>{{ NbreCourse }}</p></div>
+    </div>
+  </div>-->
+  <div class="card bg-info mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <h4 class="card-title">N° OF SUBJECT TAUGHT</h4>
+        <div class="card-text display-4">{{ NbreCourse }}</div>
+    </div>
+  </div>
+  <!--<div class="col-md-4">
+    <div class="bg-success m-3" style="height: 170px;">
+      <div><p> N° Quiz Created </p></div>
+      <div><p>{{ NbreQuiz }}</p></div>
+    </div>
+  </div>-->
+  <div class="card bg-primary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <h4 class="card-title">N° QUIZ CREATED </h4>
+        <div class="card-text display-4">{{ NbreQuiz }}</div>
+    </div>
+  </div>
+  <!--<div class="col-md-4">
+    <div class="bg-secondary m-3" style="height: 170px;">
+      <div><p> N° Class </p></div>
+      <div><p>{{ NbreClass }}</p></div>
+    </div>
+  </div>-->
+  <div class="card bg-secondary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <h4 class="card-title">NUMBER OF CLASS </h4>
+        <div class="card-text display-4">{{ NbreClass }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top: 50px;">
+  <div class="col-md-6">
+    <mat-card>
+      <mat-card-title>Table of Course(s) and Class(es)</mat-card-title>
+      <mat-card-content>
+
+        <mat-form-field floatLabel="never">
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="COURSES_DATA" class="mat-elevation-z8">
+
+            <!-- entitled Column -->
+            <ng-container matColumnDef="entitled">
+              <th mat-header-cell *matHeaderCellDef> Course </th>
+              <td mat-cell *matCellDef="let element"> {{ element.entitled }} </td>
+            </ng-container>
+
+            <!-- Sequence Column -->
+            <ng-container matColumnDef="classes">
+              <th mat-header-cell *matHeaderCellDef> Class(es) </th>
+              <td mat-cell *matCellDef="let element">
+                <div *ngFor="let cours of element.classes">
+                  {{ cours.level + ' ' + cours.class_number + ' ' + cours.option + ' ' + cours.serie }}
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-spinner></mat-spinner>
+              </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noData">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+              </mat-footer-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': COURSES_DATA!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(COURSES_DATA!=null && COURSES_DATA.data.length==0)}"></mat-footer-row>
+          </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-6">
+    <mat-card *ngIf="ClassArray">
+      <mat-card-content>
+        <canvas id="bar" style="width: 100%"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2">
+
+  </div>
+  <div class="col-md-8" style="margin-top: 30px">
+    <mat-card>
+      <mat-card-title>Table of quiz taker</mat-card-title>
+      <mat-card-content>
+
+        <mat-form-field floatLabel="never">
+          <input matInput (keyup)="quizTakerFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="QUIZTAKER_DATA" class="mat-elevation-z8">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> First name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.student_details.first_name }} </td>
+            </ng-container>
+
+            <!-- Surname Column -->
+            <ng-container matColumnDef="surname">
+              <th mat-header-cell *matHeaderCellDef> Last name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.student_details.last_name }} </td>
+            </ng-container>
+
+            <!-- entitled Column -->
+            <ng-container matColumnDef="entitled">
+              <th mat-header-cell *matHeaderCellDef> Entitled </th>
+              <td mat-cell *matCellDef="let element"> {{ element.quiz_details.entitled }} </td>
+            </ng-container>
+
+            <!-- start_time Column -->
+            <ng-container matColumnDef="start_time">
+              <th mat-header-cell *matHeaderCellDef> Start time </th>
+              <td mat-cell *matCellDef="let element">{{ element.start_time | date: 'medium' }}</td>
+            </ng-container>
+
+            <!-- end_time Column -->
+            <ng-container matColumnDef="end_time">
+              <th mat-header-cell *matHeaderCellDef> End time </th>
+              <td mat-cell *matCellDef="let element">{{ element.end_time | date: 'medium' }}</td>
+            </ng-container>
+
+            <!-- score Column -->
+            <ng-container matColumnDef="score">
+              <th mat-header-cell *matHeaderCellDef> Score </th>
+              <td mat-cell *matCellDef="let element">{{ element.score }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="loading">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                <mat-spinner></mat-spinner>
+              </mat-footer-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="noData">
+              <mat-footer-cell *matFooterCellDef colspan="6">
+                No data.
+              </mat-footer-cell>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="QuizTakerColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: QuizTakerColumns;"></tr>
+            <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': QUIZTAKER_DATA!=null}"></mat-footer-row>
+            <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(QUIZTAKER_DATA!=null && QUIZTAKER_DATA.data.length==0)}"></mat-footer-row>
+          </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-md-2">
+
+  </div>
+</div>

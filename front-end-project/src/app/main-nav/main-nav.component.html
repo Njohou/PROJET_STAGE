@@ -1,0 +1,160 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <span><img src="assets/images/logo.png" style="border-radius: 70px 70px 70px 70px; width: 150px; margin-left: 20px;"></span>
+    <mat-toolbar>
+      <div class="p-3" style="margin-left: 25px;">Menu</div>
+    </mat-toolbar>
+
+    <mat-nav-list class="p-3">
+
+      <a mat-list-item routerLink="/navMenu/home-student" class="home_student">
+          <mat-icon aria-hidden="false" aria-label="home icon" class="mr-2" color="accent">
+            home
+          </mat-icon>
+          <span style="font-size: 0.8em;">Home student</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/teacher-home" class="home_teacher">
+        <mat-icon aria-hidden="false" aria-label="home icon" class="mr-2" color="accent">
+          home
+        </mat-icon>
+        <span style="font-size: 0.8em;">Home</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/admin-panel" class="admin_panel">
+        <mat-icon aria-hidden="false" aria-label="home icon" class="mr-2" color="accent">
+          home
+        </mat-icon>
+        <span style="font-size: 0.8em;">Admin panel</span>
+      </a>
+<!--      <a mat-list-item routerLink="/navMenu/class-info">-->
+<!--          <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--            account_circle-->
+<!--          </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">User Profile</span>-->
+<!--      </a>-->
+<!--      <a mat-list-item routerLink="/navMenu/add-note">-->
+<!--        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--          note_add-->
+<!--        </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">Add Note</span>-->
+<!--      </a>-->
+<!--      <a mat-list-item routerLink="/navMenu/add-mark">-->
+<!--        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">-->
+<!--          assignment-->
+<!--        </mat-icon>-->
+<!--        <span style="font-size: 0.8em;">Add Mark</span>-->
+<!--      </a>-->
+      <a mat-list-item routerLink="/navMenu/class-view" class="classView">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          article
+        </mat-icon>
+        <span style="font-size: 0.8em;">Classes List</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/student" class="student">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          receipt_long
+        </mat-icon>
+        <span style="font-size: 0.8em;">Manage Student</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/teacher" class="teacher">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          receipt_long
+        </mat-icon>
+        <span style="font-size: 0.8em;">Manage Teacher</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/add-course" class="course">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          receipt_long
+        </mat-icon>
+        <span style="font-size: 0.8em;">Manage Course</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/course-list" class="course_list">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          article
+        </mat-icon>
+        <span style="font-size: 0.8em;">Courses List</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/quiz/create" class="quiz_create">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          add_to_photos
+        </mat-icon>
+        <span style="font-size: 0.8em;">Create Quizz</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/quiz/list" class="course_list">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          article
+        </mat-icon>
+        <span style="font-size: 0.8em;">Quizz List</span>
+      </a>
+      <a mat-list-item routerLink="/navMenu/quiz-historic" class="home_student">
+        <mat-icon aria-hidden="false" aria-label="profile icon" class="mr-2" color="accent">
+          sticky_note_2
+        </mat-icon>
+        <span style="font-size: 0.8em;">Quiz Historic</span>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="warn" class="mb-1">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>E-EDUC</span>
+      <span class="spacer"></span>
+      <mat-icon color="accent" class="icon-spacer">account_circle</mat-icon>
+      <span style="font-size: large;padding: 0 10px;">Hello, {{username}}</span>
+
+      <!--  notifications    -->
+      <button mat-mini-fab
+              matBadgeHidden= "{{notifications.length == 0 ? true: false}}"
+              matBadge="{{notifications.length}}"
+              matBadgeColor="primary"
+              matTooltip="Notifications"
+              [matMenuTriggerFor]="menu"
+              (click)="touchNotification()">
+        <mat-icon>notification_important</mat-icon>
+      </button>
+
+      <!--reference for notification div-->
+      <mat-menu #menu="matMenu" >
+        <span mat-menu-item [disableRipple]="true" class="notification-content">
+          <!-- popover content begin -->
+          <div class="p-1">
+            <div *ngIf="notifications.length !=0">
+              <mat-list>
+                <div *ngFor="let notification of notifications">
+                    <mat-list-item class="single-notification">{{notification.message}}</mat-list-item>
+                    <mat-divider></mat-divider>
+                </div>
+              </mat-list>
+            </div>
+
+            <div *ngIf="notifications.length == 0">
+              <span> No new notification</span>
+            </div>
+          </div>
+            <!-- popover content end  -->
+        </span>
+      </mat-menu>
+
+      <span style="padding: 0 12px;"></span>
+      <button mat-raised-button color="accent" (click)="logout()">Deconnexion</button>
+    </mat-toolbar>
+
+    <div class="m-3">
+      <!-- Add Content Here -->
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,27 @@
+/* p {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 0px;
+  padding-top: 30px;
+  color: white;
+} */
+
+.display-4 {
+  font-weight: bold;
+}
+
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-body-icon {
+  position: absolute;
+  z-index: 0;
+  top: 25px;
+  right: 4px;
+  opacity: 0.4;
+  font-size: 90px;
+  padding: 5px;
+}

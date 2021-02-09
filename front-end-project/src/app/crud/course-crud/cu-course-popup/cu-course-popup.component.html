@@ -1,0 +1,63 @@
+<div class="jumbotron" style="background-color: wheat; text-align: center; height: 20px">
+  <h1 class="display-4" *ngIf="!coursedata">Create courses</h1>
+  <h1 class="display-4" *ngIf="coursedata">Update courses</h1>
+</div>
+
+<!--<mat-dialog-content>-->
+  <form [formGroup]="CourseForm" style="align-content: center">
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <mat-form-field class="full-width" appearance="legacy">
+          <mat-label>Course</mat-label>
+          <input type="text" placeholder="Pick one" aria-label="Number" matInput formControlName="course" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          <mat-error *ngIf="CourseForm.get('course').errors?.required">
+            Required course
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <mat-form-field class="full-width" appearance="legacy" class="form-group">
+          <mat-label>Coefficient</mat-label>
+          <input type="number" matInput formControlName="coef" placeholder="Enter coef" required>
+          <mat-error *ngIf="CourseForm.get('coef').errors?.required">
+            Required Coefficient
+          </mat-error>
+          <mat-error *ngIf="CourseForm.get('coef').errors?.max || CourseForm.get('coef').errors?.min">
+            Coefficient must be between 1 and 6
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <mat-form-field class="full-width" appearance="legacy">
+          <mat-label>Teacher</mat-label>
+          <mat-select required formControlName="teacher_id">
+            <mat-option *ngFor="let teacher of teachers" [value]="teacher.id">
+              {{ teacher.first_name + ' ' + teacher.last_name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="CourseForm.get('teacher_id').errors?.required">
+            Required teacher
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-12">
+        <mat-dialog-actions align="center">
+          <button mat-raised-button color="primary" (click)="OnSubmitForm()" *ngIf="!coursedata" [disabled]="CourseForm.invalid">Submit</button>
+          <button mat-raised-button color="primary" (click)="OnUpdateForm()" *ngIf="coursedata" cdkFocusInitial [disabled]="CourseForm.invalid">Update</button>
+          <button mat-raised-button (click)="ClosePopup()" color="warn">Cancel</button>
+        </mat-dialog-actions>
+      </div>
+    </div>
+  </form>
+<!--</mat-dialog-content>-->

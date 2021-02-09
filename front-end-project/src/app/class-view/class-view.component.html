@@ -1,0 +1,40 @@
+<!-- classes -->
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">Class(es)</h1>
+</div>
+
+
+<!-- class group1 -->
+<div class="row m-3">
+  <mat-card class="col-sm-4" *ngFor="let classe of classChooseArray">
+    <div class="p-2 bg-light">
+      <mat-card-header>
+        <div class="mx-auto">
+          <mat-card-title>{{ classe.level + ' ' + classe.class_number + ' ' + classe.serie + ' ' + classe.option }}</mat-card-title>
+          <mat-card-subtitle *ngIf="hide">
+            <button mat-icon-button color="accent" aria-label="Edit a class" (click)="EditClass(classe)">
+              <mat-icon>launch</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" aria-label="Delete a class" (click)="DeleteClass(classe.id)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="text-center">
+          <button mat-raised-button color="primary" style="margin-right: 5px" routerLink="/navMenu/class-info/{{ classe.id }}"> Class detail </button>
+          <button mat-raised-button color="warn" style="margin-right: 5px" routerLink="/navMenu/add-note/{{ classe.id }}"> Set note </button>
+          <button mat-raised-button color="accent" routerLink="/navMenu/add-mark/{{ classe.id }}"> Set mark </button>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>
+
+<div class="text-center m-1">
+  <button mat-mini-fab aria-label="Add new class" (click)="OpenCUMethod()" class="create_boutton">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

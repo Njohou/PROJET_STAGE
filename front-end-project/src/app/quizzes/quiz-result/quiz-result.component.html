@@ -1,0 +1,59 @@
+<div *ngIf="userAnswers.length != 0 && myQuiz.questions.length !=0">
+
+  <div style="display: flex;justify-content: center;align-items: baseline;">
+    <div>
+      <img alt="" class="img-fluid"
+           src="../../../assets/images/congratulation.jpg">
+    </div>
+    <div>
+      <mat-card>
+        <h4>
+          Congratulation you reach til the end<br>
+          Your score is: <br>
+          <b>{{result.toFixed(2)}}/100</b><br>
+          <b *ngIf="result<50"><em> Sorry you failed the quiz test, try again!</em></b>
+          <b *ngIf="result>= 50"><em> Congratulation you succeeded the quiz test!</em></b><br>
+          <em>Always try to improve yourself!</em>
+        </h4>
+      </mat-card>
+    </div>
+  </div>
+
+  <mat-accordion class="m-2">
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Consult your result here
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+        <div class="m-3 p-2">
+          <div *ngFor="let question of myQuiz.questions; let i = index">
+
+            <div class="">
+                <span class="font-weight-bold">{{question.question_desc}}</span>
+                <mat-list role="list">
+                    <div *ngFor="let answer_question of question.answers">
+                      <mat-list-item role="listitem"
+                      [ngStyle]="{'background-color': setColor(i, answer_question)}">
+                        <span>{{answer_question.answer}}</span>
+                          <span *ngIf="answer_question.is_true" class="material-icons" style="color: green;">
+                            check_circle
+                          </span>
+                      </mat-list-item>
+                    </div>
+                </mat-list>
+            </div>
+
+          </div>
+        </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>
+
+<div *ngIf="userAnswers.length == 0 || myQuiz.questions.length ==0" >
+  <p>You didn't choose any answer from all the previous questions </p>
+</div>

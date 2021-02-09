@@ -1,0 +1,27 @@
+<div *ngIf="quiz!=null" class="text-right text-danger font-weight-bold">
+  <mat-icon color="accent">
+    query_builder
+  </mat-icon>
+  Time left: {{timeLeft}}
+</div>
+<div>
+  <div class="question-wrapper">
+    <div *ngIf="quiz!=null" >
+      <div><h2 class="text-center mb-5">{{quiz.entitled}}</h2></div>
+      <div class="question-number">
+        QUESTION  {{currentIndex + 1}} OF {{quiz.questions.length}}
+      </div>
+      <app-question [question]="quiz.questions[currentIndex]"
+                    [selectedAnswer]="userAnswerList[currentIndex]">
+      </app-question>
+    </div>
+  </div>
+
+  <div class="buttons" *ngIf="quiz!=null">
+    <button (click)="previous()" [disabled]="previousDisable">
+      Previous
+    </button>
+    <button  (click)="next()" [disabled]="nextDisable" [innerHtml]="currentIndex == quiz.questions.length - 1 ? 'Submit' : 'Next'">
+    </button>
+  </div>
+</div>

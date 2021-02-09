@@ -1,0 +1,68 @@
+<div class="flex-container text-white m-auto">
+  <!--<div class="col-md-4">
+    <div class="bg-primary m-3" style="height: 170px;">
+      <div><p> N° of User </p></div>
+      <div><p>{{ NbreUser }}</p></div>
+    </div>
+  </div> -->
+  <div class="card bg-info mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-user-graduate mr-2"></i>
+        </div>
+        <h4 class="card-title">NUMBER OF USER </h4>
+        <div class="card-text display-4">{{ NbreUser }}</div>
+    </div>
+  </div>
+  <!--<div class="col-md-4">
+    <div class="bg-success m-3" style="height: 170px;">
+      <div><p> N° of subject </p></div>
+      <div><p>{{ NbreSubj }}</p></div>
+    </div>
+  </div>-->
+  <div class="card bg-primary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-book-open"></i>
+        </div>
+        <h4 class="card-title">NUMBER OF SUBJECT </h4>
+        <div class="card-text display-4">{{ NbreSubj }}</div>
+    </div>
+  </div>
+  <!--<div class="col-md-4">
+    <div class="bg-secondary m-3" style="height: 170px;">
+      <div><p> N° Class </p></div>
+      <div><p>{{ NbreClass }}</p></div>
+    </div>
+  </div>-->
+  <div class="card bg-secondary mb-2" style="width: 18rem;">
+    <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <h4 class="card-title">NUMBER OF CLASS </h4>
+        <div class="card-text display-4">{{ NbreClass }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-bottom: 30px;margin-top: 50px;">
+  <div class="col-md-6">
+    <mat-card>
+      <mat-card-title style="text-align: center"> Proportion of students and teachers </mat-card-title>
+      <mat-card-content>
+        <canvas id="Daughnut" style="width: 100%"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <mat-card>
+      <mat-card-title style="text-align: center"> Number of student by class </mat-card-title>
+      <mat-card-content>
+        <canvas id="bar" style="width: 100%"></canvas>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

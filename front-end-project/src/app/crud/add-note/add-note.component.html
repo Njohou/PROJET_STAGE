@@ -1,0 +1,144 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container" style="text-align: center">
+    <h1>Add mark</h1>
+  </div>
+</div>
+
+<mat-card style="text-align: center">
+
+  <mat-dialog-content>
+    <form (ngSubmit)="OnsubmitNote()" [formGroup]="NoteForm">
+      <mat-card-header >
+        <mat-card-subtitle > Course :
+          <mat-form-field class="full-width" appearance="legacy">
+            <mat-label>Choose the course</mat-label>
+            <mat-select formControlName="courseChoose" matInput required>
+              <mat-option *ngFor="let course of CourseArray" [value]="course.id">
+                {{ course.entitled }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="NoteForm.get('courseChoose').errors?.required">
+              Required course
+            </mat-error>
+          </mat-form-field>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: -50px;margin-left: auto">
+        <mat-label>Name</mat-label>
+        <mat-select matInput formControlName="name" required>
+          <mat-option *ngFor="let student of StudentArray" [value]="student.id">
+            {{ student.first_name + ' ' + student.last_name }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="NoteForm.get('name').errors?.required">
+          Required name
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
+        <mat-label> Evaluation date </mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+               formControlName="date_Eval" [max]="dateNow" required disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker disabled="false" color="accent"></mat-datepicker>
+        <mat-error *ngIf="NoteForm.get('date_Eval').errors?.required">
+          Required Evaluation date
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
+        <mat-label>Note</mat-label>
+        <input type="number" matInput formControlName="note" required placeholder="Example : 13.00 or 13.0">
+        <mat-error *ngIf="NoteForm.get('note').errors?.required">
+          Required note
+        </mat-error>
+        <mat-error *ngIf="NoteForm.get('note').errors?.pattern">
+          Syntax is not correct
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width" appearance="legacy" style="margin-right: 0px;">
+        <mat-label> Sequence </mat-label>
+        <mat-select matInput formControlName="sequence" required >
+          <mat-option *ngFor="let sequence of sequences" [value]="sequence">
+            {{ sequence }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="NoteForm.get('sequence').errors?.required">
+          Required sequence
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-group" style="margin-top: 30px;">
+        <button mat-mini-fab aria-label="Add a new note" matTooltip="Add note">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+</mat-card>
+
+
+<mat-form-field floatLabel="never">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="EVALUATION_DATA" class="mat-elevation-z8">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.student_note.first_name + ' ' + element.student_note.last_name}} </td>
+    </ng-container>
+
+    <!-- Sequence Column -->
+    <ng-container matColumnDef="sequence">
+      <th mat-header-cell *matHeaderCellDef> Sequence </th>
+      <td mat-cell *matCellDef="let element"> {{element.sequence}} </td>
+    </ng-container>
+
+    <!-- Date_eval Column -->
+    <ng-container matColumnDef="date_eval">
+      <th mat-header-cell *matHeaderCellDef> Valuation date </th>
+      <td mat-cell *matCellDef="let element"> {{element.eval_date}} </td>
+    </ng-container>
+
+    <!-- courseChoose Column -->
+    <ng-container matColumnDef="courseChoose">
+      <th mat-header-cell *matHeaderCellDef> Course </th>
+      <td mat-cell *matCellDef="let element"> {{element.course_note.entitled}} </td>
+    </ng-container>
+
+    <!-- Mark Column -->
+    <ng-container matColumnDef="note">
+      <th mat-header-cell *matHeaderCellDef> Mark </th>
+      <td mat-cell *matCellDef="let element"> {{element.note}} </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td *matCellDef="let row">
+        <button mat-icon-button color="warn" (click)="DeleteMethod(row.id)"><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+<!--        Loading data...-->
+        <mat-spinner></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': EVALUATION_DATA!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(EVALUATION_DATA!=null && EVALUATION_DATA.data.length==0)}"></mat-footer-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

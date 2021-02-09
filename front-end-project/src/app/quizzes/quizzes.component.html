@@ -1,0 +1,17 @@
+<!--<app-quiz-detail></app-quiz-detail>-->
+<div>
+  <mat-card class="m-3">Quiz Details</mat-card>
+  <div class="m-5">
+    <div *ngIf="quiz != null" >
+        <h3 class="font-weight-bold">
+          {{quiz.entitled}} ({{quiz.questions.length}} question<span *ngIf="quiz.questions.length > 1">s</span>)
+        </h3>
+        <div *ngFor="let question of quiz.questions; let j= index">
+          <h4 class="mb-2 text-secondary">{{j+1}}) {{question.question_desc}} </h4>
+          <div *ngFor="let answer of question.answers">
+            <h4 class="mb-1 font-weight-light"> <u>{{answer.answer}}</u> (this answer is {{answer.is_true}}) </h4>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

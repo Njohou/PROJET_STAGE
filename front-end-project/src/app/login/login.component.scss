@@ -1,0 +1,55 @@
+mat-card {
+  max-width: 600px;
+  margin: 4em auto;
+  text-align: center;
+  max-height: 600px;
+}
+
+.header {
+  text-align: center;
+}
+
+.full-width{
+  width: 80%;
+}
+
+.aLink{
+  float: right;
+  padding-right: 60px;
+  text-decoration: none;
+}
+
+.username-input{
+  padding-top: 10px;
+}
+
+mat-icon{
+  cursor: pointer;
+}
+
+.logo {
+background-repeat: no-repeat;
+width: 100px;
+height: 100px;
+display: block;
+margin: auto;
+  /*width: 100px;
+  height: 100px;
+  border-radius: -50px;
+  position: absolute;
+  top: -50px;
+  left: calc(50% - 50px);*/
+}
+
+.logo-container{
+  /*width: 320px;
+  height: 420px;
+  background: white;
+  color: white;
+  top: 30%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;*/
+
+}

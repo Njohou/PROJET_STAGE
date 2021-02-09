@@ -1,0 +1,161 @@
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">Welcome Sir, create a Quiz</h1>
+  <h3 class="display-2" style="color: red"><i><u>N.B </u>: The duration of the quiz is in minutes</i></h3>
+</div>
+
+<form class="question__form m-3 p-3" [formGroup]="quizForm" (ngSubmit)="addQuiz(quizForm)">
+  <!---Quiz Section -->
+
+  <!-- select space -->
+  <div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Select Class</mat-label>
+        <mat-select formControlName="quizClass">
+          <div *ngIf="classes.length != 0; else noClass">
+            <mat-option *ngFor="let class of classes; let i = index" [value]="class.id" (click)="selectedClassF(i)">
+              {{isNull(class.level)+ ' '+ isNull(class.serie) + isNull(class.class_number) + ' '+ isNull(class.option)}}
+            </mat-option>
+          </div>
+          <ng-template #noClass>
+            <mat-option [disabled]="classes.length == 0">
+              <span>Empty class list</span>
+            </mat-option>
+          </ng-template>
+        </mat-select>
+        <mat-error *ngIf="quizForm.get('quizClass').errors?.required">
+          required field.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Select Course</mat-label>
+        <mat-select formControlName="quizCourse" required>
+          <div *ngIf="classes.length">
+            <div *ngIf="classes[selectedClass].all_courses.length; else noCourse">
+              <div *ngFor="let course of classes[selectedClass].all_courses">
+                <mat-option *ngIf="course.course_teacher.id.toString() === id" [value]="course.entitled">
+                  {{course.entitled}}
+                </mat-option>
+              </div>
+            </div>
+          </div>
+          <ng-template #noCourse>
+            <mat-option [disabled]="!classes[selectedClass].all_courses.length">
+              <span>Empty course list</span>
+            </mat-option>
+          </ng-template>
+        </mat-select>
+        <mat-error *ngIf="quizForm.get('quizCourse').errors?.required">
+          required field.
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Quiz Name" formControlName="quizName" required>
+    <mat-error *ngIf="quizForm.get('quizName').errors?.required">
+      required field.
+    </mat-error>
+  </mat-form-field>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <input type="number" matInput placeholder="The duration of the quiz" formControlName="quizTime" required>
+      <mat-error *ngIf="quizForm.get('quizTime').errors?.required">
+        required field.
+      </mat-error>
+      <mat-error *ngIf="quizForm.get('quizTime').errors?.min || quizForm.get('quizTime').errors?.max">
+        The number must be between 0-300 min.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div class="question_form m-5">
+    <div formArrayName="questions">
+      <div class="answer_form m-3 P-3" *ngFor="let question of getQuestions(quizForm); let i=index">
+        <div class="ui raised segments" [formGroupName]="i">
+
+          <h3>Fill question number {{i +1 }}</h3>
+
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Question Title" formControlName="question_desc">
+          </mat-form-field>
+
+          <!-- Answers segment -->
+          <div class="m-3 p-3">
+            <h3>Answer propositions</h3>
+
+            <div formArrayName="answers">
+              <div [formGroupName]="j" *ngFor="let selected_answer of getAnswers(question); let j=index">
+
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="enter a proposition" formControlName="answer">
+                </mat-form-field>
+
+                <mat-radio-group formControlName="is_true">
+                  <mat-radio-button class="mr-1" value="true">True</mat-radio-button>
+                  <mat-radio-button class="" value="false" checked>False</mat-radio-button>
+                </mat-radio-group>
+
+                <span *ngIf="getAnswers(question).length > 1">
+                  <button mat-raised-button type="submit" color="warn" class="mb-1" (click)="removeAnswer(i,j)">
+                    Delete Answer
+                  </button>
+                </span>
+
+                <br>
+
+                <button mat-raised-button
+                        type="submit"
+                        color="primary"
+                        (click)="addAnswer(i)"
+                        *ngIf="getAnswers(question).length - 1  == j">
+                  Add Answer
+                </button>
+
+              </div>
+            </div>
+          </div>
+          <!-- End Answer -->
+
+          <span *ngIf="getQuestions(quizForm).length > 1">
+            <button mat-raised-button type="submit" color="warn" class="mr-1 mb-1" (click)="removeQuestion(i)">
+              Delete Question
+            </button>
+          </span>
+
+          <button mat-raised-button
+                  type="submit"
+                  color="primary"
+                  (click)="addQuestion()"
+                  *ngIf="getQuestions(quizForm).length - 1 == i">
+            Add Question
+          </button>
+
+        </div>
+
+        <hr class="m-3">
+
+      </div>
+      <!-- End Question -->
+    </div>
+  </div>
+
+  <div class="m-2 p-2">
+    <button mat-raised-button [disabled]="quizForm.invalid" type="submit" color="primary">Submit</button>
+  </div>
+
+</form>
+
+<div *ngIf="success" class="text-center text-blue">
+  <h3>Quiz created successfully!</h3>
+</div>
+

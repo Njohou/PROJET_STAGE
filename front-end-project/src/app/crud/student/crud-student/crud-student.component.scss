@@ -1,0 +1,28 @@
+/* Structure */
+table {
+  width: 100%;
+  margin: auto;
+}
+
+.mat-form-field {
+  margin: 0 135px auto;
+}
+
+.cent-boutton{
+  margin: 50px auto;
+  padding-left: 600px;
+}
+
+mat-paginator {
+  width: 100%;
+  margin: auto;
+}
+
+.hide{
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}

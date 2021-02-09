@@ -1,0 +1,65 @@
+<div class="jumbotron" style="background-color: wheat; text-align: center">
+  <h1 class="display-4">Courses</h1>
+</div>
+
+<mat-form-field floatLabel="never">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="COURSE_DATA" class="mat-elevation-z8">
+
+    <!-- Entitled Column -->
+    <ng-container matColumnDef="entitled">
+      <th mat-header-cell *matHeaderCellDef> Entitled </th>
+      <td mat-cell *matCellDef="let element"> {{element.entitled}} </td>
+    </ng-container>
+
+    <!-- coefficient Column -->
+    <ng-container matColumnDef="coefficient">
+      <th mat-header-cell *matHeaderCellDef> Coefficient </th>
+      <td mat-cell *matCellDef="let element"> {{element.coefficient}} </td>
+    </ng-container>
+
+    <!-- Teacher name Column -->
+    <ng-container matColumnDef="teacher">
+      <th mat-header-cell *matHeaderCellDef> Teacher </th>
+      <td mat-cell *matCellDef="let element"> {{element.course_teacher.first_name +' '+ element.course_teacher.last_name}} </td>
+    </ng-container>
+
+    <!-- Icon Column (click)="DeleteCourse(row.id)"-->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td *matCellDef="let row">
+        <button mat-icon-button color="accent" (click)="OpenUpdateMethod(row)"><mat-icon>launch</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="DeleteCourse(row.id)"><mat-icon>delete_outline</mat-icon></button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="loading">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+<!--        Loading data...-->
+        <mat-spinner></mat-spinner>
+      </mat-footer-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="noData">
+      <mat-footer-cell *matFooterCellDef colspan="6">
+        No data.
+      </mat-footer-cell>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': COURSE_DATA!=null}"></mat-footer-row>
+    <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(COURSE_DATA!=null && COURSE_DATA.data.length==0)}"></mat-footer-row>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div class="text-center m-1">
+  <button mat-mini-fab aria-label="Add a new student" style="margin-top: 20px" matTooltip="Add new student" (click)="OpenCreateMethod()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

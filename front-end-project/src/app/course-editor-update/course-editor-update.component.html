@@ -1,0 +1,55 @@
+<div class="jumbotron" style="background-color: dimgrey; text-align: center">
+  <h1 class="display-4">create your content</h1>
+</div>
+
+<form (ngSubmit)="OnUpdateForm()" [formGroup]="NoteForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Course</mat-label>
+    <mat-select formControlName="course" matInput required>
+      <div *ngIf="courses.length != 0; else noClass">
+        <mat-option *ngFor="let course of courses; let i = index" [value]="course.id">
+          {{course.entitled}}
+        </mat-option>
+      </div>
+      <ng-template #noClass>
+        <mat-option [disabled]="courses.length == 0">
+          <span>Empty courses list</span>
+        </mat-option>
+      </ng-template>
+    </mat-select>
+    <mat-error *ngIf="NoteForm.get('course').errors?.required">
+      This field is required.
+    </mat-error>
+  </mat-form-field>
+
+  <div>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="enter your note title" formControlName="entitled" required>
+      <mat-error *ngIf="NoteForm.get('entitled').errors?.required">
+        This field is required.
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <ckeditor
+    formControlName="text"
+    debounce="500" matInput required>
+  </ckeditor>
+  <!--<mat-error *ngIf="NoteForm.get('text').errors?.required">
+    This field is required.
+  </mat-error>-->
+  <!--    [(ngModel)]="ckeditorContent"-->
+
+  <div style="width: fit-content; margin: auto;">
+    <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="primary">Update</button>
+    <!--      <button mat-raised-button [disabled]="NoteForm.invalid" type="submit" color="accent">Publish</button>-->
+  </div>
+</form>
+
+<!--<div>
+  <div style="width: fit-content; margin: auto;">
+    <button mat-raised-button color="primary" (click)="getData()">Save</button>
+    <button mat-raised-button color="accent" (click)="getData()">Publish</button>
+  </div>
+</div>-->
+

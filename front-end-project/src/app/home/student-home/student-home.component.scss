@@ -1,0 +1,49 @@
+p {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 0px;
+  padding-top: 30px;
+  color: white;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  margin: 0 135px auto;
+}
+
+mat-paginator {
+  width: 100%;
+  margin: auto;
+}
+
+.hide{
+  display: none;
+}
+
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}
+
+.display-4 {
+  font-weight: bold;
+}
+
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card-body-icon {
+  position: absolute;
+  z-index: 0;
+  top: 25px;
+  right: 4px;
+  opacity: 0.4;
+  font-size: 90px;
+  padding: 5px;
+}

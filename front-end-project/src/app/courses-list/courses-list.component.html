@@ -1,0 +1,22 @@
+<div class="jumbotron" style="background-color: dimgrey; text-align: center">
+  <h1 class="display-4">Your courses</h1>
+</div>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let course of Course_list">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ course.entitled }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-nav-list class="p-3" *ngFor="let chapter of course.chapter_list">
+      <a routerLink="/navMenu/display-course/{{ chapter.id }}">
+        <span> {{ chapter.entitled }} </span>
+      </a>
+<!--      <button *ngIf="this.isStaff == 'true'" mat-icon-button routerLink="/navMenu/update-note/{{ chapter.id }}"><mat-icon>launch</mat-icon></button>-->
+      <button *ngIf="this.isStaff == 'true'" mat-icon-button color="warn" (click)="OnDelete(chapter.id)"><mat-icon>delete_outline</mat-icon></button>
+    </mat-nav-list>
+  </mat-expansion-panel>
+</mat-accordion>
+
+
