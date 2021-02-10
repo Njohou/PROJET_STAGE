@@ -1,1 +1,0 @@
-web: gunicorn icc_intership_project.wsgi --log-file -
